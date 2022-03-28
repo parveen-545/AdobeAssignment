@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <header>
+                <h5><span>Search @ Twiter</span> </h5>
+                <p> Auto refresh in <span id="refreshtime"></span> seconds
+                </p>
+            </header>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="twitter-section">
+
+                <div class="content-section">
+                    <div class="form">
+                        <div class="searchBox">
+                            <input autocomplete="on" class="form-control searchdata" id="searchInput" placeholder="Type here..." type="text" />
+                        </div>
+
+                        <div class="search">
+                            <button class="btn btn-search" id="searchbutton" onclick="Move()" type="button">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="result-section">
+                    <div class="twiter-list">
+                        <ul class="navList">
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="Loading" class="loader" style="display: none">
+                    <img src="./image/loader.gif">
+                </div>
+
+
+                <script>
+				var count = 0;
+				$(document).ready(function() {
+                        bindData("");
+						settime();
+                    });
+                    function bindData(keyvalue) {
+                        debugger
+                        $('.navList').empty();
+                        $('#Loading').show()
+                        var searchVal = keyvalue == "" ? "adobe" : keyvalue;
+                        $.ajax({
+                            url: "https://aravindtwitter.herokuapp.com/twittersearch?key=" + searchVal,
+                            type: "Get",
+                            datatype: "json",
+                            cache: false,
+                            success: function(response) {
+                                //  debugger
+                                $('#Loading').hide()
+                                $(response.statuses).each(function() {
+                                    $('.navList').append('<li><div class="result-name"><div class="u-pic"><img src="' + this.user.profile_image_url + '"/></div><div class="filter-result"><div class="U-data" style="color:#' + this.user.profile_link_color + '"><span>' + this.user.screen_name + ' @' + this.user.name + ' ' + this.created_at + '</span> </div><div class="form-check"><p>' + this.text + '</p></div></div></div></li>');
+                                });
+                            },
+                            error: function(xhr) {
+                                $('#Loading').hide()
+                            }
+                        });
+						settime();
+                    }
+
+                    function Move() {
+                        $('#Loading').show()
+                        var searchVal = $("#searchInput").val();
+                        //  debugger
+                        bindData(searchVal);
+                    }
+
+                    $("#schedule").click(function() {
+                        // debugger
+                        $("#Loading").show();
+                        setTimeout($("#Loading").hide(), 1000);
+                    });
+
+                    
+					
+					
+					function settime() {
+					debugger
+                       var seconds = 30;
+					   //alert(count);
+                        $("#refreshtime").html(seconds);
+                        setInterval(function() {
+                            if (seconds > 0) {
+                                seconds--;
+                                $("#refreshtime").html(seconds);
+                                if (seconds == 0) {
+                                    if (count == 0) {
+                                        bindData("Twitter");
+                                        count++;
+                                    } else if (count == 1) {
+                                        bindData("Photoshop");
+                                        count++;
+                                    } else if (count == 2) {
+									    count == 0;
+                                        bindData("xd");
+                                    }
+                                }
+                            } else {
+                                //location.reload(true);
+                            }
+                        }, 1000);
+                    }
+					
+					
+                </script>
+            </div>
+        </div>
+</body>
+
+</html>

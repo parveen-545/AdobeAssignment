@@ -1,0 +1,65 @@
+body {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+    color: #28ABF0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid;
+}
+
+.twitter-section .form {
+    display: flex;
+    justify-content: center;
+}
+
+ul.navList {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.navList li .result-name {
+    display: flex;
+}
+
+.u-pic {
+    margin-right: 15px;
+}
+
+.result-section {
+    padding: 50px 0;
+}
+
+ul.navList li {
+    box-shadow: 2px 0px 5px #ddd;
+    margin-bottom: 20px;
+    padding: 20px 15px 10px;
+    border-radius: 8px;
+}
+
+.btn-search {
+    background: #28ABF0;
+    color: #fff;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.btn-search:hover {
+    color: #fff;
+}
+
+.form-check {
+    padding-left: 0;
+}
+
+div#Loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50px;
+}
